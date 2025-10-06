@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Calculadora React – DIO React Developer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um pequeno projeto de calculadora desenvolvido durante o curso React Developer da DIO, focado em praticar fundamentos do React, componentização e estilização com styled-components.
 
-## Available Scripts
+## Objetivo do Projeto
+Construir uma calculadora funcional e responsiva, praticando:
+- Estados e gerenciamento de dados com `useState`
+- Componentização (separação em `Button`, `Input` e estrutura de layout)
+- Estilização com `styled-components`
+- Boas práticas de eventos (`onClick`) e prevenção de re-renderizações infinitas
+- Organização de lógica de operações aritméticas
 
-In the project directory, you can run:
+## Demonstração das Funcionalidades
+- Entrada numérica: 0–9
+- Operadores: `+`, `-`, `X`, `/`
+- Utilidades: `C` (limpar), `±` (trocar sinal), `%` (percentual), `,` (decimal)
+- `=` para calcular o resultado
+- Tratamento de erro em divisão por zero (exibe "Erro")
 
-### `npm start`
+## Tecnologias Utilizadas
+- React 19 (CRA – react-scripts)
+- Styled-components
+- JavaScript (ES2020+)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Como Rodar o Projeto
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+2. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+3. Acesse em `http://localhost:3000`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Estrutura de Pastas
+```
+src/
+  App.js                 # Componente principal e lógica da calculadora
+  index.js               # Bootstrap da aplicação React
+  styles.js              # Layout base (Container, Content, Row)
+  components/
+    Button/
+      index.js           # Componente de botão reutilizável com variants
+      styles.js          # Estilos do botão (operator, utility, equals)
+    Input/
+      index.js           # Componente de display
+      styles.js          # Estilos do display
+```
 
-### `npm test`
+## Decisões de Implementação
+- Componentes pequenos e focados (SRP): `Button` e `Input` isolam responsabilidades.
+- Variants no botão (`operator`, `utility`, `equals`) para estilos consistentes e sem lógica condicional duplicada.
+- Lógica aritmética centralizada:
+  - `operation` (estado) define a operação corrente
+  - `firstNumber` guarda o operando anterior
+  - `currentNumber` recebe os dígitos e participa do cálculo
+  - Funções auxiliares:
+    - `compute()` concentra o cálculo de `+`, `-`, `*`, `/`
+    - `handlePercent()` trata `%` respeitando contexto (ex.: `%` relativo ao primeiro operando)
+    - `handleDecimal()` impede múltiplos pontos
+    - `handleToggleSign()` troca sinal sem afetar `0`
+- Prevenção de re-render infinito: eventos `onClick` recebem referências de função (ex.: `onClick={handleSumNumbers}`), nunca executam durante o render (evitando `onClick={handleSumNumbers()}`).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Pontos de Aprendizado (React/DIO)
+- useState: controle de múltiplos estados e atualização baseada no valor anterior
+- Eventos e renderização: passar handlers corretamente para evitar loops
+- Renderização declarativa: UI reflete o estado atual, sem manipular DOM diretamente
+- Styled-components: CSS-in-JS com temas/variants e organização por componente
+- Tratamento de bordas: divisão por zero, limite de casas decimais e reset do fluxo
 
-### `npm run build`
+## Próximos Passos (Opcional)
+- Exibir a operação em andamento (ex.: "12 +")
+- Histórico de operações/resultados
+- Teclado físico: mapear `keydown` para acionar os mesmos handlers
+- Internacionalização de decimal (ponto vs vírgula) e formatação com `Intl.NumberFormat`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Licença
+Uso educacional no contexto do curso DIO React Developer.
